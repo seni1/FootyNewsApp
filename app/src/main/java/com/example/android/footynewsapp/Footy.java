@@ -7,13 +7,15 @@ public class Footy {
     private String webPublicationDate;
     private String webTitle;
     private String webUrl;
+    private String webAuthor;
 
-    public Footy(String type, String webTitle, String webPublicationDate, String webSectionName, String webUrl) {
+    public Footy(String type, String webTitle, String webPublicationDate, String webSectionName, String webUrl, String webAuthor) {
         this.type = type;
         this.webTitle = webTitle;
         this.webPublicationDate = webPublicationDate;
         this.webSectionName = webSectionName;
         this.webUrl = webUrl;
+        this.webAuthor = webAuthor;
     }
 
     public String getType() {
@@ -34,6 +36,10 @@ public class Footy {
 
     public String getWebUrl() {
         return webUrl;
+    }
+
+    public String getWebAuthor() {
+        return webAuthor;
     }
 }
 

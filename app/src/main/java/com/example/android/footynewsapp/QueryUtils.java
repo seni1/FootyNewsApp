@@ -118,6 +118,10 @@ public class QueryUtils {
                 String title = currentNews.getString("webTitle");
                 String url = currentNews.getString("webUrl");
 
+                JSONObject fields = currentNews.getJSONObject("fields");
+                String author = fields.getString("byline");
+
+
                 String dateFormat;
 
                 if (date == null) {
@@ -127,7 +131,7 @@ public class QueryUtils {
                     dateFormat = dateFormat.replaceAll("-", ".");
                 }
 
-                Footy football = new Footy(type, section, dateFormat, title, url);
+                Footy football = new Footy(type, section, dateFormat, title, url, author);
 
                 allFootball.add(football);
 

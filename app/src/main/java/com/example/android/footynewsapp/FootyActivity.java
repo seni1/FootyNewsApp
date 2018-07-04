@@ -15,13 +15,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FootyActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Footy>> {
 
-    private static final String FOOTY_REQUEST_URL = "https://content.guardianapis.com/football?api-key=14153493-2fcc-42d8-9cc6-5a202222e671";
+    private static final String FOOTY_REQUEST_URL = "https://content.guardianapis.com/football?show-fields=byline&api-key=14153493-2fcc-42d8-9cc6-5a202222e671";
     private static final int NEWS_LOADER_ID = 1;
 
     private FootyAdapter adapter;
@@ -36,7 +37,6 @@ public class FootyActivity extends AppCompatActivity implements LoaderManager.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_footy);
-
         footyListView = findViewById(R.id.list);
         emptyStateTextView = findViewById(R.id.empty_view);
         footyListView.setEmptyView(emptyStateTextView);
@@ -53,7 +53,8 @@ public class FootyActivity extends AppCompatActivity implements LoaderManager.Lo
         } else {
             View loadingIndicator = findViewById(R.id.loading_indicator);
             loadingIndicator.setVisibility(View.GONE);
-            emptyStateTextView.setText(R.string.no_internet_connection);
+            Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
+            loadingIndicator.setVisibility(View.GONE);
         }
 
         footyListView.setOnItemClickListener(new AdapterView.OnItemClickListener()  {

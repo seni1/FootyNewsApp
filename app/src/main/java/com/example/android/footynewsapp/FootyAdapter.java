@@ -31,16 +31,19 @@ public class FootyAdapter extends ArrayAdapter<Footy> {
         TextView titleTextView = listItemView.findViewById(R.id.title_tv);
         TextView sectionNameTextView = listItemView.findViewById(R.id.section_tv);
         TextView dateTextView = listItemView.findViewById(R.id.date_tv);
+        TextView authorTextView = listItemView.findViewById(R.id.author_tv);
 
         String type = String.valueOf(currentFooty.getType());
         String title = String.valueOf(currentFooty.getWebTitle());
         String sectionName = String.valueOf(currentFooty.getWebSectionName());
         String date = String.valueOf(currentFooty.getWebPublicationDate());
+        String author = String.valueOf(currentFooty.getWebAuthor());
 
         typeTextView.setText(type);
         titleTextView.setText(title);
         sectionNameTextView.setText(sectionName);
         dateTextView.setText(date);
+        authorTextView.setText(author);
 
         return listItemView;
     }
