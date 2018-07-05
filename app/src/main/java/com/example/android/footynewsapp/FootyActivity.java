@@ -25,7 +25,7 @@ import java.util.List;
 
 public class FootyActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Footy>> {
 
-    private static final String FOOTY_REQUEST_URL = "https://content.guardianapis.com/search?show-fields=byline&api-key=14153493-2fcc-42d8-9cc6-5a202222e671";
+    private static final String FOOTY_REQUEST_URL = "http://content.guardianapis.com/search";
     private static final int NEWS_LOADER_ID = 1;
 
     private FootyAdapter adapter;
