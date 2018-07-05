@@ -4,11 +4,14 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +25,7 @@ import java.util.List;
 
 public class FootyActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Footy>> {
 
-    private static final String FOOTY_REQUEST_URL = "https://content.guardianapis.com/football?show-fields=byline&api-key=14153493-2fcc-42d8-9cc6-5a202222e671";
+    private static final String FOOTY_REQUEST_URL = "https://content.guardianapis.com/search?show-fields=byline&api-key=14153493-2fcc-42d8-9cc6-5a202222e671";
     private static final int NEWS_LOADER_ID = 1;
 
     private FootyAdapter adapter;
@@ -32,6 +35,22 @@ public class FootyActivity extends AppCompatActivity implements LoaderManager.Lo
     private ListView footyListView;
     private ConnectivityManager connectivityManager;
     private NetworkInfo networkInfo;
+    private static final String USGS_REQUEST_URL = "http://content.guardianapis.com/search";
+    private static final String PAGE_SIZE = "page-size";
+    private static final String API_KEY = "api-key";
+    private static final String KEY = "14153493-2fcc-42d8-9cc6-5a202222e671";
+    private static final String THUMBNAIL_TRAIL_TEXT_BYLINE = "thumbnail,trailText,byline";
+    private static final String SHOW_FIELDS = "show-fields";
+    private static final String BYLINE = "byline";
+    private static final String NONE = "none";
+    private static final String SECTION = "section";
+    private static final String ORDER_BY = "order-by";
+    private static final String NEWEST = "newest";
+    private static final String RELEVANCE = "relevance";
+    private static final String QUERY = "q";
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +136,35 @@ public class FootyActivity extends AppCompatActivity implements LoaderManager.Lo
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String searchResult(String query) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Uri baseUri = Uri.parse(USGS_REQUEST_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        String pageSize = sharedPreferences.getString(getString(R.string.settings_page_size_key),
+                getString(R.string.settings_page_size_default));
+        if (TextUtils.isEmpty(pageSize)) {
+            pageSize = "0";
+        }
+        uriBuilder.appendQueryParameter(PAGE_SIZE, pageSize);
+        uriBuilder.appendQueryParameter(API_KEY, KEY);
+        uriBuilder.appendQueryParameter(SHOW_FIELDS, THUMBNAIL_TRAIL_TEXT_BYLINE);
+        String section = sharedPreferences.getString(getString(R.string.settings_only_show_key), getString(R.string.settings_only_show_default));
+        if (!section.equals(NONE)) {
+            uriBuilder.appendQueryParameter(SECTION, section);
+        }
+
+        if (query == null) {
+            uriBuilder.appendQueryParameter(ORDER_BY, NEWEST);
+            return uriBuilder.toString();
+        }
+        uriBuilder.appendQueryParameter(ORDER_BY, RELEVANCE);
+        uriBuilder.appendQueryParameter(QUERY, query);
+
+        return uriBuilder.toString();
     }
 
 }
