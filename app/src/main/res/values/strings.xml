@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">Footy News App</string>
+
+
     <string name="no_internet_connection">No internet connection</string>
+
     <string name="no_news">No news</string>
+
     <string name="settings_menu_item">Settings</string>
+
     <string name="settings_title">Footy Settings</string>
-    <string name="settings_min_magnitude_label">Minimum Magnitude</string>
-    <string name="settings_min_magnitude_key" translatable="false">min_magnitude</string>
+
+
     <string name="settings_min_magnitude_default" translatable="false">0</string>
 
     <string name="settings_page_size_key">page_size</string>
